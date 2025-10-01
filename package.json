@@ -1,0 +1,27 @@
+{
+  "name": "express-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "npx tsx --env-file=.env --watch  src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/next": "^8.0.7",
+    "@types/next-auth": "^3.13.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "next": "^15.5.4",
+    "pg": "^8.16.3",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.6.1"
+  }
+}
