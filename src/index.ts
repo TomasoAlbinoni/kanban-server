@@ -4,10 +4,10 @@ import { Pool } from 'pg';
 
 const pool = new Pool({
   user: process.env.DBUSER,
-  host: 'localhost',
+  host: process.env.DBHOST,
   database: process.env.DB,
   password: process.env.DBPASS,
-  port: 5432,
+  port: process.env.DBPORT,
 })
 
 const app = express();
