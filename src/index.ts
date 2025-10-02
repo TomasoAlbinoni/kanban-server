@@ -1,4 +1,5 @@
-import express, { Request, Response } from "express";
+import express from "express";
+import type { Request, Response } from "express";
 import cors from "cors";
 import { Pool } from 'pg';
 
@@ -7,7 +8,7 @@ const pool = new Pool({
   host: process.env.DBHOST,
   database: process.env.DB,
   password: process.env.DBPASS,
-  port: process.env.DBPORT,
+  port: Number(process.env.DBPORT ?? 5432),
 })
 
 const app = express();
