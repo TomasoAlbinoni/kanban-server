@@ -1,8 +1,10 @@
 import express from "express";
 import type { Request, Response } from "express";
 import cors from "cors";
+import dotenv from 'dotenv';
 import { Pool } from 'pg';
 
+dotenv.config();
 const pool = new Pool({
   user: process.env.DBUSER,
   host: process.env.DBHOST,
