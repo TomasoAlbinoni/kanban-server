@@ -38,12 +38,12 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.post('/move', async (req, res) => {
+app.put('/update', async (req, res) => {
     try {
     const item: Item = req.body
     const result = await pool.query(
-      'UPDATE tasks SET list = $1 WHERE id = $2',
-      [item.list, item.id]
+      'UPDATE tasks SET list = $1, title = $2, content = $3 WHERE id = $4;',
+      [item.list, item.title, item.content, item.id]
     )
     res.json({ success: true, rowCount: result.rowCount })
   } catch (err) {
