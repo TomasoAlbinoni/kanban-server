@@ -22,6 +22,7 @@ interface Item {
   title?: string
   content?: string
   list: string
+  index: number
 }
 
 app.use(cors<Request>());
@@ -39,11 +40,38 @@ app.get('/', async (req, res) => {
 });
 
 app.put('/update', async (req, res) => {
-    try {
+  try {
     const item: Item = req.body
+    const currentItem: Item | undefined = (await pool.query<Item>('SELECT * FROM tasks WHERE id = $1;', [item.id])).rows[0]
+    if (!currentItem) {
+      res.status(404).json({ error: 'Item not found' })
+      return
+    }
+    if (currentItem.list === item.list) {
+      if (currentItem.index < item.index) {
+        await pool.query(
+          'UPDATE tasks SET index = index - 1 WHERE list = $1 AND index > $2 AND index <= $3;',
+          [item.list, currentItem.index, item.index]
+        )
+      } else if (currentItem.index > item.index) {
+        await pool.query(
+          'UPDATE tasks SET index = index + 1 WHERE list = $1 AND index >= $2 AND index < $3;',
+          [item.list, item.index, currentItem.index]
+        )
+      }
+    } else {
+      await pool.query(
+        'UPDATE tasks SET index = index - 1 WHERE list = $1 AND index > $2;',
+        [currentItem.list, currentItem.index]
+      )
+      await pool.query(
+        'UPDATE tasks SET index = index + 1 WHERE list = $1 AND index >= $2;',
+        [item.list, item.index]
+      )
+    }
     const result = await pool.query(
-      'UPDATE tasks SET list = $1, title = $2, content = $3 WHERE id = $4;',
-      [item.list, item.title, item.content, item.id]
+      'UPDATE tasks SET list = $1, title = $2, content = $3, index = $4 WHERE id = $5;',
+      [item.list, item.title, item.content, item.index, item.id]
     )
     res.json({ success: true, rowCount: result.rowCount })
   } catch (err) {
