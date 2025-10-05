@@ -1,10 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import type { Secret, JwtPayload } from "jsonwebtoken";;
-import type { AuthRequest } from "@/types/authRequest"
-import type KanbanJwtPayload from "@/types/kanbanJwtPayload";
-
-const secretKey: Secret = process.env.SECRETKEY ?? "";
+import type { JwtPayload } from "jsonwebtoken";;
+import type { AuthRequest } from "../types/authRequest.js"
+import type KanbanJwtPayload from "../types/kanbanJwtPayload.js";
+import { SECRET_KEY } from "../config.js";
 
 export const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers['authorization'];
@@ -12,7 +11,7 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
 
   if (!token) return res.status(401).send('Token required');
 
-  jwt.verify(token, secretKey as string, (err, decoded) => {
+  jwt.verify(token, SECRET_KEY as string, (err, decoded) => {
     if (err) return res.status(403).send('Invalid or expired token');
     if (!decoded) return res.status(403).send('Invalid or expired token');
     req.user = decoded as KanbanJwtPayload;

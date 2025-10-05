@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { pool } from "@/db/pool";
-import type { User } from "@/types/user";
-import type { AuthRequest } from "@/types/authRequest";
+import { pool } from "../db/pool.js";
+import type { AuthRequest } from "../types/authRequest.js";
 
 type Item = {
   id: number

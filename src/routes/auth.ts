@@ -1,12 +1,10 @@
 import { Router } from "express";
-import type { Secret } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { pool } from "@/db/pool";
-import type { User } from "@/types/user";
-import type KanbanJwtPayload from "@/types/kanbanJwtPayload";
-
-const secretKey: Secret = process.env.SECRETKEY ?? "";
+import { pool } from "../db/pool.js";
+import type { User } from "../types/user.js";
+import type KanbanJwtPayload from "../types/kanbanJwtPayload.js";
+import { SECRET_KEY } from "../config.js";
 
 type Credentials = {
   username: string;
@@ -30,7 +28,7 @@ router.post("/login", async (req, res) => {
       res.status(500).json({ error: 'Database error' })
     }
     
-    const token = jwt.sign({ userId: user?.id, admin: user?.admin } as KanbanJwtPayload, secretKey, { expiresIn: '6h' });
+    const token = jwt.sign({ userId: user?.id, admin: user?.admin } as KanbanJwtPayload, SECRET_KEY, { expiresIn: '6h' });
     
     res.status(200).send({ token });
 });

@@ -1,19 +1,24 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "ES2020",
+    "outDir": "dist",
+
     // File Layout
     "rootDir": "./src",
-    "outDir": "./dist",
+    //"outDir": "./dist",
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"]
     },
-    "moduleResolution": "bundler",
+    //"moduleResolution": "bundler",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "preserve",
-    "target": "esnext",
+    //"module": "preserve",
+    //"target": "esnext",
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],

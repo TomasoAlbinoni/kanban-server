@@ -1,9 +1,10 @@
 import { Pool } from "pg";
+import { DBUSER, DBHOST, DB, DBPASS, DBPORT } from "../config.js";
 
 export const pool = new Pool({
-  user: process.env.DBUSER,
-  host: process.env.DBHOST,
-  database: process.env.DB,
-  password: process.env.DBPASS,
-  port: Number(process.env.DBPORT ?? 5432),
+  user: DBUSER,
+  host: DBHOST,
+  database: DB,
+  password: DBPASS,
+  port: DBPORT,
 })
